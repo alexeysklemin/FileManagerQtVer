@@ -1,84 +1,82 @@
 myFileManager/
 ├── CMakeLists.txt
+├── cmake/                      # Доп. файлы CMake
+│   ├── FindDependencies.cmake
+│   └── BuildOptions.cmake
 ├── inc/
-│   ├── myFileManager.h               # Главный класс приложения
+│   ├── app/
+│   │   ├── AppConfig.h         # Конфигурация приложения
+│   │   └── myFileManager.h     # Главный класс
 │   ├── core/
-│   │   ├── FileSystem/
-│   │   │   ├── FileManager.h         # Абстрактный интерфейс
-│   │   │   ├── LocalFileSystem.h     # Win/Linux реализации
-│   │   │   └── FTPFileSystem.h       # FTP-клиент
-│   │   ├── Operations/
-│   │   │   ├── FileOperation.h       # Базовый класс операций
-│   │   │   ├── CopyOperation.h       # Копирование
-│   │   │   ├── MoveOperation.h       # Перемещение
-│   │   │   ├── DeleteOperation.h     # Удаление
-│   │   │   ├── Archive/
-│   │   │   │   ├── ArchiveOperation.h       # Базовый класс архивации
-│   │   │   │   ├── ZipOperation.h           # ZIP архивация
-│   │   │   │   ├── TarOperation.h           # TAR архивация
-│   │   │   │   ├── UnzipOperation.h         # Разархивация ZIP
-│   │   │   │   └── UntarOperation.h         # Разархивация TAR
-│   │   │   ├── Codec/
-│   │   │   │   ├── CodecOperation.h         # Базовый класс кодирования
-│   │   │   │   ├── AESEncryptOperation.h    # Шифрование AES
-│   │   │   │   ├── AESDecryptOperation.h    # Дешифрование AES
-│   │   │   │   ├── Base64EncodeOperation.h  # Кодирование Base64
-│   │   │   │   └── Base64DecodeOperation.h  # Декодирование Base64
-│   │   │   └── Helpers/
-│   │   │       ├── OperationFactory.h       # Фабрика операций
-│   │   │       └── OperationValidator.h     # Валидатор операций
-│   │   └── HelpSystem.h              # Справка
+│   │   ├── filesystem/
+│   │   │   ├── IFileSystem.h   # Абстрактный интерфейс
+│   │   │   ├── LocalFileSystem.h
+│   │   │   ├── FtpFileSystem.h
+│   │   │   └── FileSystemFactory.h
+│   │   ├── network/
+│   │   │   ├── INetworkManager.h
+│   │   │   ├── HttpDownloader.h
+│   │   │   └── FtpDownloader.h
+│   │   ├── operations/
+│   │   │   ├── interfaces/
+│   │   │   │   ├── IOperation.h
+│   │   │   │   └── IProgressNotifier.h
+│   │   │   ├── impl/
+│   │   │   │   ├── basic/
+│   │   │   │   │   ├── CopyOperation.h
+│   │   │   │   │   ├── MoveOperation.h
+│   │   │   │   │   └── DeleteOperation.h
+│   │   │   │   └── processing/
+│   │   │   │       ├── ZipOperation.h
+│   │   │   │       ├── CryptoOperation.h
+│   │   │   │       └── ...
+│   │   │   └── helpers/
+│   │   │       ├── OperationBuilder.h
+│   │   │       └── OperationExecutor.h
+│   │   ├── plugins/
+│   │   │   ├── PluginInterface.h
+│   │   │   └── PluginLoader.h
+│   │   └── utils/
+│   │       ├── Logger.h
+│   │       ├── Settings.h
+│   │       └── HelpSystem.h
 │   └── ui/
-│       ├── UIManager.h               # Ядро UI
-│       ├── components/
-│       │   ├── FilePanel.h           # Базовый класс панели
-│       │   ├── LeftPanel.h           # Левая панель
-│       │   ├── RightPanel.h          # Правая панель
-│       │   ├── StatusBar.h           # Статус-бар
-│       │   └── CommandLine.h         # Командная строка
+│       ├── interfaces/
+│       │   ├── IView.h
+│       │   ├── IWindow.h
+│       │   └── IPanel.h
+│       ├── managers/
+│       │   ├── UIManager.h
+│       │   └── ThemeManager.h
+│       ├── impl/
+│       │   ├── console/        # Псевдографика
+│       │   │   ├── ConsoleView.h
+│       │   │   └── ConsolePanel.h
+│       │   └── gui/           # Графический режим
+│       │       ├── MainWindow.h
+│       │       └── FilePanel.h
 │       └── dialogs/
-│           ├── ConfirmDialog.h       # Диалог подтверждения
-│           ├── ErrorDialog.h         # Диалог ошибок
-│           ├── ArchiveDialog.h       # Диалог настроек архивации
-│           └── CodecDialog.h         # Диалог настроек шифрования
-└── src/
-    ├── core/
-    │   ├── FileSystem/
-    │   │   ├── FileManager.cpp       # Фабричный метод
-    │   │   ├── LocalFileSystem.cpp   # Win/Linux реализации
-    │   │   └── FTPFileSystem.cpp     # FTP реализация
-    │   ├── Operations/
-    │   │   ├── FileOperation.cpp     # Базовая реализация
-    │   │   ├── CopyOperation.cpp     # Копирование
-    │   │   ├── MoveOperation.cpp     # Перемещение
-    │   │   ├── DeleteOperation.cpp   # Удаление
-    │   │   ├── Archive/
-    │   │   │   ├── ArchiveOperation.cpp
-    │   │   │   ├── ZipOperation.cpp
-    │   │   │   ├── TarOperation.cpp
-    │   │   │   ├── UnzipOperation.cpp
-    │   │   │   └── UntarOperation.cpp
-    │   │   ├── Codec/
-    │   │   │   ├── CodecOperation.cpp
-    │   │   │   ├── AESEncryptOperation.cpp
-    │   │   │   ├── AESDecryptOperation.cpp
-    │   │   │   ├── Base64EncodeOperation.cpp
-    │   │   │   └── Base64DecodeOperation.cpp
-    │   │   └── Helpers/
-    │   │       ├── OperationFactory.cpp
-    │   │       └── OperationValidator.cpp
-    │   └── HelpSystem.cpp            # Справка
-    ├── ui/
-    │   ├── UIManager.cpp             # Реализация UI
-    │   ├── components/               # Компоненты UI
-    │   │   ├── FilePanel.cpp
-    │   │   ├── LeftPanel.cpp
-    │   │   ├── RightPanel.cpp
-    │   │   ├── StatusBar.cpp
-    │   │   └── CommandLine.cpp
-    │   └── dialogs/
-    │       ├── ConfirmDialog.cpp
-    │       ├── ErrorDialog.cpp
-    │       ├── ArchiveDialog.cpp
-    │       └── CodecDialog.cpp
-    └── myFileManager.cpp             # Точка входа
+│           ├── AbstractDialog.h
+│           ├── ConfirmDialog.h
+│           └── ...
+├── src/
+│   ├── app/
+│   │   └── myFileManager.cpp   # Точка входа
+│   ├── core/                   # Реализации всех inc/core/...
+│   │   ├── filesystem/
+│   │   ├── network/
+│   │   ├── operations/
+│   │   └── utils/
+│   └── ui/
+│       ├── managers/
+│       ├── impl/
+│       └── dialogs/
+├── plugins/                    # Примеры расширений
+│   ├── example_plugin/
+│   └── ...
+├── resources/                 # Иконки, переводы
+│   ├── icons/
+│   └── translations/
+└── tests/
+    ├── unit/
+    └── integration/
