@@ -1,0 +1,84 @@
+myFileManager/
+├── CMakeLists.txt
+├── inc/
+│   ├── myFileManager.h               # Главный класс приложения
+│   ├── core/
+│   │   ├── FileSystem/
+│   │   │   ├── FileManager.h         # Абстрактный интерфейс
+│   │   │   ├── LocalFileSystem.h     # Win/Linux реализации
+│   │   │   └── FTPFileSystem.h       # FTP-клиент
+│   │   ├── Operations/
+│   │   │   ├── FileOperation.h       # Базовый класс операций
+│   │   │   ├── CopyOperation.h       # Копирование
+│   │   │   ├── MoveOperation.h       # Перемещение
+│   │   │   ├── DeleteOperation.h     # Удаление
+│   │   │   ├── Archive/
+│   │   │   │   ├── ArchiveOperation.h       # Базовый класс архивации
+│   │   │   │   ├── ZipOperation.h           # ZIP архивация
+│   │   │   │   ├── TarOperation.h           # TAR архивация
+│   │   │   │   ├── UnzipOperation.h         # Разархивация ZIP
+│   │   │   │   └── UntarOperation.h         # Разархивация TAR
+│   │   │   ├── Codec/
+│   │   │   │   ├── CodecOperation.h         # Базовый класс кодирования
+│   │   │   │   ├── AESEncryptOperation.h    # Шифрование AES
+│   │   │   │   ├── AESDecryptOperation.h    # Дешифрование AES
+│   │   │   │   ├── Base64EncodeOperation.h  # Кодирование Base64
+│   │   │   │   └── Base64DecodeOperation.h  # Декодирование Base64
+│   │   │   └── Helpers/
+│   │   │       ├── OperationFactory.h       # Фабрика операций
+│   │   │       └── OperationValidator.h     # Валидатор операций
+│   │   └── HelpSystem.h              # Справка
+│   └── ui/
+│       ├── UIManager.h               # Ядро UI
+│       ├── components/
+│       │   ├── FilePanel.h           # Базовый класс панели
+│       │   ├── LeftPanel.h           # Левая панель
+│       │   ├── RightPanel.h          # Правая панель
+│       │   ├── StatusBar.h           # Статус-бар
+│       │   └── CommandLine.h         # Командная строка
+│       └── dialogs/
+│           ├── ConfirmDialog.h       # Диалог подтверждения
+│           ├── ErrorDialog.h         # Диалог ошибок
+│           ├── ArchiveDialog.h       # Диалог настроек архивации
+│           └── CodecDialog.h         # Диалог настроек шифрования
+└── src/
+    ├── core/
+    │   ├── FileSystem/
+    │   │   ├── FileManager.cpp       # Фабричный метод
+    │   │   ├── LocalFileSystem.cpp   # Win/Linux реализации
+    │   │   └── FTPFileSystem.cpp     # FTP реализация
+    │   ├── Operations/
+    │   │   ├── FileOperation.cpp     # Базовая реализация
+    │   │   ├── CopyOperation.cpp     # Копирование
+    │   │   ├── MoveOperation.cpp     # Перемещение
+    │   │   ├── DeleteOperation.cpp   # Удаление
+    │   │   ├── Archive/
+    │   │   │   ├── ArchiveOperation.cpp
+    │   │   │   ├── ZipOperation.cpp
+    │   │   │   ├── TarOperation.cpp
+    │   │   │   ├── UnzipOperation.cpp
+    │   │   │   └── UntarOperation.cpp
+    │   │   ├── Codec/
+    │   │   │   ├── CodecOperation.cpp
+    │   │   │   ├── AESEncryptOperation.cpp
+    │   │   │   ├── AESDecryptOperation.cpp
+    │   │   │   ├── Base64EncodeOperation.cpp
+    │   │   │   └── Base64DecodeOperation.cpp
+    │   │   └── Helpers/
+    │   │       ├── OperationFactory.cpp
+    │   │       └── OperationValidator.cpp
+    │   └── HelpSystem.cpp            # Справка
+    ├── ui/
+    │   ├── UIManager.cpp             # Реализация UI
+    │   ├── components/               # Компоненты UI
+    │   │   ├── FilePanel.cpp
+    │   │   ├── LeftPanel.cpp
+    │   │   ├── RightPanel.cpp
+    │   │   ├── StatusBar.cpp
+    │   │   └── CommandLine.cpp
+    │   └── dialogs/
+    │       ├── ConfirmDialog.cpp
+    │       ├── ErrorDialog.cpp
+    │       ├── ArchiveDialog.cpp
+    │       └── CodecDialog.cpp
+    └── myFileManager.cpp             # Точка входа
